@@ -13,8 +13,8 @@
   --gold:#e3ad42;--green:#42c98a;--shadow:0 22px 68px rgba(0,0,0,.42)
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;max-width:100%;overflow-x:hidden}
-body{margin:0;min-height:100vh;color:var(--text);font-family:Tahoma,"Segoe UI",Arial,sans-serif;line-height:1.75;background:radial-gradient(circle at 85% -5%,rgba(47,147,221,.2),transparent 25%),radial-gradient(circle at 8% 30%,rgba(201,40,46,.16),transparent 28%),linear-gradient(180deg,#070b12,#0c131d 50%,#070b12);overflow-x:hidden}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;max-width:100%;overflow-x:clip}
+body{margin:0;min-height:100vh;color:var(--text);font-family:Tahoma,"Segoe UI",Arial,sans-serif;line-height:1.75;background:radial-gradient(circle at 85% -5%,rgba(47,147,221,.2),transparent 25%),radial-gradient(circle at 8% 30%,rgba(201,40,46,.16),transparent 28%),linear-gradient(180deg,#070b12,#0c131d 50%,#070b12);overflow-x:clip}
 a{color:inherit}.wrap{width:min(1180px,calc(100% - 24px));margin:auto;min-width:0}
 .topbar{padding:14px 0 0}
 .return{display:inline-flex;align-items:center;gap:7px;text-decoration:none;border:1px solid var(--line);background:#101925;padding:8px 13px;border-radius:11px;color:#d9e7f6;font-weight:800}
@@ -60,7 +60,7 @@ button:hover,.btn:hover{transform:translateY(-1px)}
 </head>
 <body data-storage-key="campaign-benyamin-naghdi-used-v4">
 <header class="hero"><div class="wrap"><div class="hero-card">
-<div><img class="poster" src="benyamin-naghdi.png" alt="پوستر کمپین بنیامین نقدی"></div>
+<div><img class="poster" src="../../assets/benyamin-naghdi.png" alt="پوستر کمپین بنیامین نقدی"></div>
 <div>
 <span class="kicker">🚨 بسته حمایتی و کمپین فوری در X</span>
 <h1>بنیامین نقدی<br><span class="latin">Benyamin Naghdi</span></h1>
@@ -197,10 +197,8 @@ document.addEventListener("click",async event=>{
     const usable=unusedPool.length?unusedPool:pool;
     if(!usable.length)return;
     const chosen=usable[Math.floor(Math.random()*usable.length)];
-    filter="all";unusedOnly=false;search.value="";
-    document.querySelectorAll("[data-filter]").forEach(btn=>btn.classList.toggle("active",btn.dataset.filter==="all"));
-    unusedBtn.classList.remove("active");
-    page=Math.floor(ITEMS.indexOf(chosen)/PAGE_SIZE)+1;
+    const index=pool.findIndex(x=>x.id===chosen.id);
+    page=Math.floor(index/PAGE_SIZE)+1;
     render();
     requestAnimationFrame(()=>{const card=document.querySelector(`[data-id="${chosen.id}"]`);if(card){card.classList.add("flash");card.scrollIntoView({behavior:"smooth",block:"center"});setTimeout(()=>card.classList.remove("flash"),2200);}});
     return;
@@ -220,46 +218,5 @@ document.getElementById("top-pagination").innerHTML=paginationHtml("top");
 document.getElementById("bottom-pagination").innerHTML=paginationHtml("bottom");
 render();
 </script>
-
-<!-- Master-index navigation -->
-<style id="master-index-back-style">
-.master-index-back{
-  position:fixed;
-  left:max(14px,env(safe-area-inset-left));
-  bottom:max(14px,env(safe-area-inset-bottom));
-  z-index:99999;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  min-height:44px;
-  padding:10px 14px;
-  border-radius:999px;
-  background:#cf2027;
-  color:#fff !important;
-  border:2px solid rgba(255,255,255,.9);
-  box-shadow:0 10px 28px rgba(0,0,0,.32);
-  text-decoration:none !important;
-  font-family:Tahoma,"Segoe UI",Arial,sans-serif;
-  font-size:14px;
-  font-weight:800;
-  line-height:1.2;
-  direction:rtl;
-  -webkit-tap-highlight-color:transparent;
-}
-.master-index-back:hover{transform:translateY(-1px);background:#e12b33}
-.master-index-back:focus{outline:3px solid rgba(89,169,255,.55);outline-offset:3px}
-@media(max-width:520px){
-  .master-index-back{
-    left:10px;
-    right:10px;
-    bottom:max(10px,env(safe-area-inset-bottom));
-    width:auto;
-    border-radius:14px;
-  }
-}
-@media print{.master-index-back{display:none!important}}
-</style>
-<!-- End master-index navigation -->
 
 </body></html>
